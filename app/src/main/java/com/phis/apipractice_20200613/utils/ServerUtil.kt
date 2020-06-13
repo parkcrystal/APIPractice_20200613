@@ -3,6 +3,7 @@ package com.phis.apipractice_20200613.utils
 import android.content.Context
 import android.util.Log
 import okhttp3.*
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import org.json.JSONObject
 import java.io.IOException
 
@@ -18,9 +19,73 @@ class ServerUtil {
 
         val BASE_URL = "http://15.165.177.142"
 
+
+
+     /* <GET 방식> */
+        fun getRequestDuplicatedCheck(context: Context, checkType: String, inputVal: String, handler: JsonResponseHandler?) {
+
+//            또 필요함.
+            val client = OkHttpClient()
+
+//            <GET 방식> 은 어디로 갈지 주소 + 어떤 데이터를 보낼지 같이 표시됨.
+//            주소를 만들 때, 데이터 첨부까지 같이 진행!
+            
+//            중복검사 주소 배치 => 이 뒤에 파라미터 첨부할 수 있도록 builder 로 만듦.
+            val urlBuilder = "${BASE_URL}/user_check".toHttpUrlOrNull()!!.newBuilder()
+//            만든 주소 변수에 파라미터 첨부
+            urlBuilder.addEncodedQueryParameter("type", checkType)
+            urlBuilder.addEncodedQueryParameter("value", inputVal)
+
+//         첨부 데이터가 포함된 주소 확인
+            val urlString = urlBuilder.build().toString()
+            Log.d("완성된 주소", urlString)
+         
+//          Request를 만들어서 최종 전송 정보 마무리.
+            val request = Request.Builder()
+                .url(urlString)
+                .get()
+//                .header()   헤더를 요구하면 추가해야 함.
+                .build()
+
+
+
+         client.newCall(request).enqueue(object : Callback {
+             override fun onFailure(call: Call, e: IOException) {
+//                    <실패>: 서버에 연결 자체를 실패했을 경우
+             }
+
+             override fun onResponse(call: Call, response: Response) {
+//                    <성공>: 서버에 응답을 잘 받아왔을경우
+//                    응답 중에서 body(내용물)을 string으로 저장
+
+                 val bodyString = response.body!!.string()
+
+
+//                    저장한 String을 JSONObject 양식으로 가공
+//                   서버의 응답이 JSON 형태이기 때문.
+                 val json = JSONObject(bodyString)
+
+
+//                    화면 (액티비티)에 만들어낸 json변수를 전달
+                 Log.d("JSON응답", json.toString())
+                 handler?.onResponse(json)
+
+
+             }
+
+
+         })
+
+
+        }
+
+
+
 //     서버에 로그인 요청 해주는 함수
 //     context / handler 필수로 적어주자.
 //     둘 사이에, 화면에서 넘겨줘야하는 자료들을 추가로 적어줌. => id, pw를 받아오자.
+
+     /* <POST 방식> */
         fun postRequestLogin(context: Context, id:String, pw:String, handler: JsonResponseHandler?) {
 
 

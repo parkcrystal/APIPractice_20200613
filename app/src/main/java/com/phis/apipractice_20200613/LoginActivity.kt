@@ -1,5 +1,6 @@
 package com.phis.apipractice_20200613
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -24,9 +25,11 @@ class LoginActivity : BaseActivity() {
 
         signUpBtn.setOnClickListener {
 
-            val myIntent = Intent
+            val myIntent = Intent(mContext, SignUpActivity::class.java)
+            startActivity(myIntent)
 
         }
+
 
         loginBtn.setOnClickListener {
 
