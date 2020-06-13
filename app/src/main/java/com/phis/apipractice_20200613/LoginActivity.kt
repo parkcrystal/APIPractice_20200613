@@ -48,11 +48,14 @@ class LoginActivity : BaseActivity() {
                         val data = json.getJSONObject("data")
                         val user = data.getJSONObject("user")
                         val loginUserNickname = user.getString("nick_name")
+                        val loginUserEmail = user.getString("email")
+
 
 
                         runOnUiThread {
-
+                        //로그인 한사람 이메일 토스트로 출력
                             Toast.makeText(mContext, "${loginUserNickname}님 환영합니다.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(mContext, "${loginUserEmail}님 환영합니다.", Toast.LENGTH_SHORT).show()
 
                         }
                     }
