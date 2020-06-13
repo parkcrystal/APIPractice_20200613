@@ -63,7 +63,10 @@ class ServerUtil {
                     val json = JSONObject(bodyString)
 
 
-//                    화면 (액티비티)에 만들어낸 jso변수를 전달
+
+
+
+//                    화면 (액티비티)에 만들어낸 json변수를 전달
 
 
                 }
