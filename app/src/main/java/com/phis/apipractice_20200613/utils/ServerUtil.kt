@@ -6,6 +6,7 @@ import okhttp3.*
 import org.json.JSONObject
 import java.io.IOException
 
+//화면(액티비티)에서 서버로 보냄.
 class ServerUtil {
     
  //    어느 객체인지 관계 없이 기능/값만 잘 사용하면 되는 것들을 모아두는 영역

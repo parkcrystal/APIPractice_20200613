@@ -9,7 +9,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 import org.json.JSONObject
 import kotlin.math.log
 
-
+//서버에서 받아온 응답처리.
 class LoginActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
