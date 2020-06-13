@@ -7,7 +7,6 @@ import android.text.TextWatcher
 import android.util.Log
 import android.widget.Toast
 import com.phis.apipractice_20200613.utils.ServerUtil
-import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import kotlinx.android.synthetic.main.activity_sign_up.emailEdt
 import kotlinx.android.synthetic.main.activity_sign_up.signUpBtn
@@ -45,7 +44,7 @@ class SignUpActivity : BaseActivity() {
 
             if(!isNickNameDuplOk) {
 //                닉네임 중복검사 통과 못함.
-                Toast.makeText((mContext, "닉네임 중복검사를 통과해야 합니다.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(mContext, "닉네임 중복검사를 통과해야 합니다.", Toast.LENGTH_SHORT).show()
 
 
 //                뒤의 로직 실행하지 않고 이 함수를 강제 종료.
@@ -56,11 +55,35 @@ class SignUpActivity : BaseActivity() {
 
 //            입력한 이메일 / 비번 / 닉네임을 들고 서버에 가입 신청.
             val email = emailEdt.text.toString()
-            val pw = pwEdt.text.toString()
+            val pw = passwordEdt.text.toString()
             val nickname = nickNameEdt.text.toString()
 
 
 //            서버에 /user - PUT으로 요청 => ServerUtil을 통해 요청하자.
+            ServerUtil.putRequestLogin(mContext, email, pw, nickname, object : ServerUtil.JsonResponseHandler{
+
+                override fun onResponse(json: JSONObject) {
+
+                    val code = json.getInt("code")
+
+                    if (code == 200) {
+
+
+                    }
+                    else {
+
+                        val message = json.getString("message")
+                        runOnUiThread {
+                            Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show()
+
+                        }
+
+                    }
+
+
+                }
+
+            })
 
             
         }
