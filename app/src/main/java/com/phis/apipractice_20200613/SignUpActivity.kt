@@ -68,6 +68,12 @@ class SignUpActivity : BaseActivity() {
 
                     if (code == 200) {
 
+                        runOnUiThread {
+                            Toast.makeText(mContext, "회원가입에 성공했습니다.", Toast.LENGTH_SHORT).show()
+                            
+//                           로그인 화면으로 다시 돌아감.
+                            finish()
+                        }
 
                     }
                     else {

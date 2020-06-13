@@ -36,6 +36,9 @@ class LoginActivity : BaseActivity() {
             val inputEmail = emailEdt.text.toString()
             val inputPw = pwEdt.text.toString()
 
+//            로그인 성공 =>  메인액티비티로 이동
+
+
             
 //      실제로 서버에 두개의 변수를 전달해서 로그인 시도
 //      별개의 클래스 (ServerUtil)에 서버 요청 기능을 만들고, 화면에서는 이를 사용.
@@ -51,7 +54,7 @@ class LoginActivity : BaseActivity() {
                     val codeNum = json.getInt("code")
 
                     if (codeNum == 200) {
-//                        로그인 성공
+//
 
                         val data = json.getJSONObject("data")
                         val user = data.getJSONObject("user")
@@ -62,10 +65,18 @@ class LoginActivity : BaseActivity() {
 
                         runOnUiThread {
                         //로그인 한사람 이메일 토스트로 출력
-                            Toast.makeText(mContext, "${loginUserNickname}님 환영합니다.", Toast.LENGTH_SHORT).show()
-                            Toast.makeText(mContext, "${loginUserEmail}님 환영합니다.", Toast.LENGTH_SHORT).show()
+
+                            /*Toast.makeText(mContext, "${loginUserNickname}님 환영합니다.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(mContext, "${loginUserEmail}님 환영합니다.", Toast.LENGTH_SHORT).show() */
+
+                        //로그인 성공 => 메인액티비티로 이동
+                            Toast.makeText(mContext, loginUserEmail, Toast.LENGTH_SHORT).show()
 
                         }
+
+                        val myIntent = Intent(mContext, MainActivity::class.java)
+                        startActivity(myIntent)
+
                     }
                     else {
 
