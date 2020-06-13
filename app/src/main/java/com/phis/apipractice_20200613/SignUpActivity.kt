@@ -22,6 +22,13 @@ class SignUpActivity : BaseActivity() {
 
     override fun setupEvents() {
 
+//      회원가입 버튼 누르기
+        signUpBtn.setOnClickListener {
+
+            
+        }
+
+
 //      닉네임 에디트 변경 시, 재중복 검사.
         nickNameEdt.addTextChangedListener(object: TextWatcher{
             override fun afterTextChanged(s: Editable?) {
