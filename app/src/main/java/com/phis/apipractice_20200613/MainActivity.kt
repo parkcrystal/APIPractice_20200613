@@ -5,14 +5,16 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
+import com.phis.apipractice_20200613.datas.Topic
 import com.phis.apipractice_20200613.utils.ContextUtil
 import com.phis.apipractice_20200613.utils.ServerUtil
 import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONObject
 
 class MainActivity : BaseActivity() {
-    
-    
+
+
+    val topicList = ArrayList<Topic>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,6 +61,21 @@ class MainActivity : BaseActivity() {
         ServerUtil.getRequestV2MainInfo(mContext, object : ServerUtil.JsonResponseHandler{
 
             override fun onResponse(json: JSONObject) {
+
+                val code = json.getInt("code")
+                if(code == 200) {
+                    val data = json.getJSONObject("data")
+
+//                    JSONArray 추출 => [] 를 가져와야 하므로,
+                    val topics = data.getJSONArray("topics")
+//                    JSON Object들을 차례대로 추출 반복문
+                    for (i in 0 until topics.length()-1) { // for (i in 0.. topics.length()-1)
+//                      topics 배열안에서 {}를 순서대로
+                        val topicJson = topics.getJSONObject(i)
+
+                    }
+
+                }
 
 
             }
