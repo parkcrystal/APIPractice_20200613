@@ -15,8 +15,11 @@ class TopicReply {
             tr.sideId = json.getInt("side_id")
             tr.userId = json.getInt("user_id")
 
-//            tr.user = ??   // 의견 JSON의 항목중 user JSONObject => User 클래스에 전달
-//            User 클래스가
+ //           의견 JSON의 항목중 user JSONObject를 => User클래스에 전달
+//            User클래스가 Json을 받아서 => User로 변환해서 리턴.
+//            tr.user에 대입
+//            tr.user = ??
+
             return tr
         }
     }
