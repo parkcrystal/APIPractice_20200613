@@ -3,6 +3,7 @@ package com.phis.apipractice_20200613
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.phis.apipractice_20200613.utils.ServerUtil
+import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONObject
 
 class MainActivity : BaseActivity() {
@@ -26,6 +27,17 @@ class MainActivity : BaseActivity() {
         ServerUtil.getRequestMyInfo(mContext, object : ServerUtil.JsonResponseHandler {
 
             override fun onResponse(json: JSONObject) {
+
+                val data = json.getJSONObject("data")
+                val user = data.getJSONObject("user")
+                val nickName = user.getString("nick_name")
+
+                runOnUiThread {
+
+                    loginUserNickNameEdt.text = "${nickName}님 환영합니다."
+
+                }
+
 
             }
         })
