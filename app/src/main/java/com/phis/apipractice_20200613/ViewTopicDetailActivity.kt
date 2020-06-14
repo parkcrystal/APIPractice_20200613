@@ -58,11 +58,16 @@ class ViewTopicDetailActivity : BaseActivity() {
  //                    받아온 주제의 제목을 화면에 표시
                         topicTitleTxt.text = mTopic.title
 
+
                         Glide.with(mContext).load(mTopic.imageUrl).into(topicImg)
 
 //                        선택 진영 정보도 출력
                         firstSideTxt.text = mTopic.sides[0].title
                         secondSideTxt.text = mTopic.sides[1].title
+
+//                        투표 현황도 파싱된 데이터를 같이 사용.
+                        firstSideVoteCountTxt.text = "${mTopic.sides[0].voteCount}표"
+                        secondSideVoteCountTxt.text = "${mTopic.sides[1].voteCount}표"
                     }
                 }
             }
