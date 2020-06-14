@@ -74,6 +74,11 @@ class LoginActivity : BaseActivity() {
 
                         }
 
+//                        서버에서 내려주는 토큰값을 SharedPreference에 저장
+
+
+
+
                         val myIntent = Intent(mContext, MainActivity::class.java)
                         startActivity(myIntent)
 
