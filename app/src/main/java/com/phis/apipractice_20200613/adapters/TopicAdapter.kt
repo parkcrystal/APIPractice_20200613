@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.phis.apipractice_20200613.R
 import com.phis.apipractice_20200613.datas.Topic
 
@@ -37,6 +38,7 @@ class TopicAdapter(val mContext: Context,
 //      실 데이터 반영
         topicTitleTxt.text = data.title
 
+//        Glide 라이브러리 사용
         Glide.with(mContext).load(data.imageUrl).into(topicImg)
 
         return  row
