@@ -83,7 +83,7 @@ class MainActivity : BaseActivity() {
 //                    JSONArray 추출 => [] 를 가져와야 하므로,
                     val topics = data.getJSONArray("topics")
 //                    JSON Object들을 차례대로 추출 반복문
-                    for (i in 0 until topics.length()-1) { // for (i in 0.. topics.length()-1)
+                    for (i in 0.. topics.length()-1) { // for (i in 0 until topics.length())
 //                      topics 배열안에서 {}를 순서대로 (i) JSONObject로 추출
                         val topicJson = topics.getJSONObject(i)
 
