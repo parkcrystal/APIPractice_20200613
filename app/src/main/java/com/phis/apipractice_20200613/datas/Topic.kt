@@ -15,7 +15,7 @@ class Topic {
             topic.id = json.getInt("id")
             topic.title = json.getString("title")
             topic.imageUrl = json.getString("img_url")
-            topic.voteCount = json.getInt("vote_count")
+           // topic.voteCount = json.getInt("vote_count")
 
 //            주제 파싱중 => 선택진영들 JSONArray 가져오기
             val sides = json.getJSONArray("sides")
@@ -42,7 +42,7 @@ class Topic {
     var id = 0
     var title = ""
     var imageUrl = ""
-    var voteCount = 0
+   // var voteCount = 0
     
 //    선택 가능 진영 목록을 담는 배열
     var sides = ArrayList<TopicSide>()

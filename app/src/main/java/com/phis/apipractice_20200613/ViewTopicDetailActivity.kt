@@ -26,13 +26,85 @@ class ViewTopicDetailActivity : BaseActivity() {
 
     override fun setupEvents() {
 
+        voteToFirstBtn.setOnClickListener {
+
+            ServerUtil.postRequestLogin(mContext, mTopic.sides[0].id, object: ServerUtil.JsonResponseHandler{
+                override fun onResponse(json: JSONObject) {
+
+
+                    val code = json.getInt("code")
+                    if (code == 200) {
+
+                        runOnUiThread {
+                            Toast.makeText(mContext, "참여해주셔서 감사합니다.", Toast.LENGTH_SHORT).show()
+                        }
+
+                    } else {
+
+
+                        val message = json.getString("message")
+                        runOnUiThread {
+                            Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show()
+                        }
+
+                    }
+
+                    getTopicDataFromServer()
+
+
+                }
+
+
+            })
+        }
+
+
+    }
+
+
+        voteToSecondBtn.setOnClickListener {
+
+            ServerUtil.postRequestLogin(mContext, mTopic.sides[1].id, object: ServerUtil.JsonResponseHandler{
+                override fun onResponse(json: JSONObject) {
+
+
+                    val code = json.getInt("code")
+                    if (code == 200) {
+
+                        runOnUiThread {
+                            Toast.makeText(mContext, "참여해주셔서 감사합니다.", Toast.LENGTH_SHORT).show()
+                        }
+
+                    } else {
+
+
+                        val message = json.getString("message")
+                        runOnUiThread {
+                            Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show()
+                        }
+
+                    }
+
+                    getTopicDataFromServer()
+
+                }
+
+
+            })
+
+
+
+        }
+
+
+
     }
 
     override fun setValues() {
 
         mTopicId = intent.getIntExtra("topic_id", -1)
 
-        if(mTopicId == -1) {
+        if (mTopicId == -1) {
 //            주제 id가 -1로 남아있다. => topic_id 첨부가 제대로 되지 않았다.
             Toast.makeText(mContext, "잘못된 접근입니다.", Toast.LENGTH_SHORT).show()
 
@@ -41,38 +113,44 @@ class ViewTopicDetailActivity : BaseActivity() {
         }
 
         Log.d("넘겨받은 주제 id", mTopicId.toString())
-        
-//        넘겨 받은 id값으로 서버에서 주제의 상세 진행상황 받아오기
-        ServerUtil.getRequestTopicDetail(mContext, mTopicId, object : ServerUtil.JsonResponseHandler{
-            override fun onResponse(json: JSONObject) {
-                val code = json.getInt("code")
-                if (code == 200) {
 
-                    val data = json.getJSONObject("data")
-                    val topic = data.getJSONObject("topic")
+        fun getTopicDataFromServer() {
+
+//        넘겨 받은 id값으로 서버에서 주제의 상세 진행상황 받아오기
+            ServerUtil.getRequestTopicDetail(
+                mContext,
+                mTopicId,
+                object : ServerUtil.JsonResponseHandler {
+                    override fun onResponse(json: JSONObject) {
+                        val code = json.getInt("code")
+                        if (code == 200) {
+
+                            val data = json.getJSONObject("data")
+                            val topic = data.getJSONObject("topic")
 
 //                    멤버변수 mTopic 에 서버에서 내려준 내용을 파싱
-                    mTopic = Topic.getTopicFromJson(topic)
+                            mTopic = Topic.getTopicFromJson(topic)
 
-                    runOnUiThread {
- //                    받아온 주제의 제목을 화면에 표시
-                        topicTitleTxt.text = mTopic.title
+                            runOnUiThread {
+                                //                    받아온 주제의 제목을 화면에 표시
+                                topicTitleTxt.text = mTopic.title
 
 
-                        Glide.with(mContext).load(mTopic.imageUrl).into(topicImg)
+                                Glide.with(mContext).load(mTopic.imageUrl).into(topicImg)
 
 //                        선택 진영 정보도 출력
-                        firstSideTxt.text = mTopic.sides[0].title
-                        secondSideTxt.text = mTopic.sides[1].title
+                                firstSideTxt.text = mTopic.sides[0].title
+                                secondSideTxt.text = mTopic.sides[1].title
 
 //                        투표 현황도 파싱된 데이터를 같이 사용.
-                        firstSideVoteCountTxt.text = "${mTopic.sides[0].voteCount}표"
-                        secondSideVoteCountTxt.text = "${mTopic.sides[1].voteCount}표"
+                                firstSideVoteCountTxt.text = "${mTopic.sides[0].voteCount}표"
+                                secondSideVoteCountTxt.text = "${mTopic.sides[1].voteCount}표"
+                            }
+                        }
                     }
-                }
-            }
-        })
+                })
+        }
     }
-
+}
 
 }

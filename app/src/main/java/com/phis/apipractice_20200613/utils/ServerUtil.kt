@@ -9,7 +9,7 @@ import java.io.IOException
 
 //화면(액티비티)에서 서버로 보냄.
 class ServerUtil {
-    
+
  //    어느 객체인지 관계 없이 기능/값만 잘 사용하면 되는 것들을 모아두는 영역
 //    JAVA => static에 대응되는 개념
     companion object {
@@ -19,6 +19,41 @@ class ServerUtil {
 
         val BASE_URL = "http://15.165.177.142"
 
+
+
+
+
+     fun postRequestVote(context: Context, sideId:Int, handler:JsonResponseHandler?) {
+
+         val client = OkHttpClient()
+
+         val urlString = "${BASE_URL}/topic_vote"
+
+         val formData = FormBody.Builder()
+             .add("side_id", sideId.toString())
+             .build()
+
+         val request = Request.Builder()
+             .url(urlString)
+             .post(formData)
+             .header("X-Http-Token", ContextUtil.getUserToken(context))  // API가 헤더를 요구하면 여기서 첨부하자
+             .build()
+
+         client.newCall(request).enqueue(object : Callback {
+             override fun onFailure(call: Call, e: IOException) {
+             }
+
+             override fun onResponse(call: Call, response: Response) {
+                 val bodyString = response.body!!.string()
+                 val json = JSONObject(bodyString)
+                 Log.d("JSON응답", json.toString())
+                 handler?.onResponse(json)
+
+             }
+
+         })
+
+     }
 
 
 /*   주제 상세 정보 확인:  원하는 주제의 상세정보 보기 => 몇번 주제인지 화면에서 받아와야 함.   */
@@ -201,7 +236,7 @@ class ServerUtil {
 
 //            <GET 방식> 은 어디로 갈지 주소 + 어떤 데이터를 보낼지 같이 표시됨.
 //            주소를 만들 때, 데이터 첨부까지 같이 진행!
-            
+
 //            중복검사 주소 배치 => 이 뒤에 파라미터 첨부할 수 있도록 builder 로 만듦.
             val urlBuilder = "${BASE_URL}/user_check".toHttpUrlOrNull()!!.newBuilder()
 //            만든 주소 변수에 파라미터 첨부
@@ -211,7 +246,7 @@ class ServerUtil {
 //         첨부 데이터가 포함된 주소 확인
             val urlString = urlBuilder.build().toString()
             Log.d("완성된 주소", urlString)
-         
+
 //          Request를 만들어서 최종 전송 정보 마무리.
             val request = Request.Builder()
                 .url(urlString)
