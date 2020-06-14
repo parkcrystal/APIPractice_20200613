@@ -28,7 +28,7 @@ class ServerUtil {
          val client = OkHttpClient()
 
 
-//           4번주소?
+//          4번주제? /topic/4  , 2번? /topic/2
          val urlBuilder = "${BASE_URL}/topic/${topicId}".toHttpUrlOrNull()!!.newBuilder()
 
 

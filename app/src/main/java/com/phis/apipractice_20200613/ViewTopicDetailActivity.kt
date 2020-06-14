@@ -4,13 +4,17 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import com.phis.apipractice_20200613.datas.Topic
 import com.phis.apipractice_20200613.utils.ServerUtil
+import kotlinx.android.synthetic.main.activity_view_topic_detail.*
 import org.json.JSONObject
 
 class ViewTopicDetailActivity : BaseActivity() {
 
 //    화면에서 넘겨준 주제 id값을 저장할 변수
     var mTopicId = -1
+//    서버에서 받아온 주제 정보를 저장할 변수
+    lateinit var mTopic: Topic
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +44,20 @@ class ViewTopicDetailActivity : BaseActivity() {
 //        넘겨 받은 id값으로 서버에서 주제의 상세 진행상황 받아오기
         ServerUtil.getRequestTopicDetail(mContext, mTopicId, object : ServerUtil.JsonResponseHandler{
             override fun onResponse(json: JSONObject) {
-                //Log.d("")
+                val code = json.getInt("code")
+                if (code == 200) {
+
+                    val data = json.getJSONObject("data")
+                    val topic = data.getJSONObject("topic")
+
+//                    멤버변수 mTopic 에 서버에서 내려준 내용을 파싱
+                    mTopic = Topic.getTopicFromJson(topic)
+
+                    runOnUiThread {
+ //                    받아온 주제의 제목을 화면에 표시
+                        topicTitleTxt.text = mTopic.title
+                    }
+                }
             }
         })
     }
