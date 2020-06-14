@@ -32,6 +32,16 @@ class Topic {
             }
 
 
+//            댓글목록도 같이 파싱하는 기능 추가.
+            val replies = json.getJSONArray("replies")
+
+//            댓글 JSONArray를 돌면서 => 파싱한 내용들 => topic.replies에 추가.
+            for(i in 0 .. replies.length()-1) {
+                val replyjson = replies.getJSONObject(i)
+                val reply = TopicReply.getTopicReplyFromJson(replyjson)
+                topic.replies.add(reply)
+            }
+
             return topic
 
         }
@@ -46,6 +56,7 @@ class Topic {
     
 //    선택 가능 진영 목록을 담는 배열
     var sides = ArrayList<TopicSide>()
-
+//  의견 목록을 담는 배열
+    val replies = ArrayList<TopicReply>()
 
 }
