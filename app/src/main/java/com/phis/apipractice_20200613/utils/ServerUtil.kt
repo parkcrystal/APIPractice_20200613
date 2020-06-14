@@ -21,6 +21,65 @@ class ServerUtil {
 
 
 
+
+     fun getRequestMyInfo(context: Context, handler: JsonResponseHandler?) {
+
+//            또 필요함.
+         val client = OkHttpClient()
+
+
+//            사용자 정보조회 주소 배치 => 이 뒤에 파라미터 첨부할 수 있도록 builder 로 만듦.
+         val urlBuilder = "${BASE_URL}/user_info".toHttpUrlOrNull()!!.newBuilder()
+
+
+//         첨부 데이터가 포함된 주소 확인
+         val urlString = urlBuilder.build().toString()
+         Log.d("완성된 주소", urlString)
+
+//          Request를 만들어서 최종 전송 정보 마무리.
+         val request = Request.Builder()
+             .url(urlString)
+             .get()
+             .header("X-Http-Token", ContextUtil.getUserToken(context))   //헤더를 요구하면 추가해야 함.
+             .build()
+
+
+
+         client.newCall(request).enqueue(object : Callback {
+             override fun onFailure(call: Call, e: IOException) {
+//                    <실패>: 서버에 연결 자체를 실패했을 경우
+             }
+
+             override fun onResponse(call: Call, response: Response) {
+//                    <성공>: 서버에 응답을 잘 받아왔을경우
+//                    응답 중에서 body(내용물)을 string으로 저장
+
+                 val bodyString = response.body!!.string()
+
+
+//                    저장한 String을 JSONObject 양식으로 가공
+//                   서버의 응답이 JSON 형태이기 때문.
+                 val json = JSONObject(bodyString)
+
+
+//                    화면 (액티비티)에 만들어낸 json변수를 전달
+                 Log.d("JSON응답", json.toString())
+                 handler?.onResponse(json)
+
+
+             }
+
+
+         })
+
+
+     }
+
+
+
+
+
+
      /* <GET 방식> */
         fun getRequestDuplicatedCheck(context: Context, checkType: String, inputVal: String, handler: JsonResponseHandler?) {
 

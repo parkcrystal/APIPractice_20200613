@@ -57,13 +57,14 @@ class LoginActivity : BaseActivity() {
                     if (codeNum == 200) {
 //
 
+                        /*
                         val data = json.getJSONObject("data")
                         val user = data.getJSONObject("user")
                         val loginUserNickname = user.getString("nick_name")
-                        val loginUserEmail = user.getString("email")
+                        val loginUserEmail = user.getString("email")*/
 
 
-
+                        /*
                         runOnUiThread {
                         //로그인 한사람 이메일 토스트로 출력
 
@@ -73,11 +74,9 @@ class LoginActivity : BaseActivity() {
                         //로그인 성공 => 메인액티비티로 이동
                             Toast.makeText(mContext, loginUserEmail, Toast.LENGTH_SHORT).show()
 
-                        }
+                        }*/
 
 //                        서버에서 내려주는 토큰값을 SharedPreference에 저장
-
-
 
                         val data = json.getJSONObject("data")
                         val token = data.getString("token")
