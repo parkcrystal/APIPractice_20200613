@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
+import com.phis.apipractice_20200613.adapters.TopicAdapter
 import com.phis.apipractice_20200613.datas.Topic
 import com.phis.apipractice_20200613.utils.ContextUtil
 import com.phis.apipractice_20200613.utils.ServerUtil
@@ -15,6 +16,8 @@ class MainActivity : BaseActivity() {
 
 
     val topicList = ArrayList<Topic>()
+
+    lateinit var topicAdapter: TopicAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +56,8 @@ class MainActivity : BaseActivity() {
 
         getTopicListFromServer()
 
+        topicAdapter = TopicAdapter(mContext, R.layout.topic_list_item, topicList)
+        topicListView.adapter = topicAdapter
 
     }
 
@@ -80,6 +85,9 @@ class MainActivity : BaseActivity() {
                         topicList.add(topic)
 
                     }
+
+//                    내용물이 추가되었으니 어댑터에게 새로고침
+                    topicAdapter.notifyDataSetChanged()
 
                 }
 
