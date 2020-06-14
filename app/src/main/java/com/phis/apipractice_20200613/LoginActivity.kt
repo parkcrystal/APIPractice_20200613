@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import com.phis.apipractice_20200613.utils.ContextUtil
 import com.phis.apipractice_20200613.utils.ServerUtil
 import kotlinx.android.synthetic.main.activity_login.*
 import org.json.JSONObject
@@ -75,6 +76,12 @@ class LoginActivity : BaseActivity() {
                         }
 
 //                        서버에서 내려주는 토큰값을 SharedPreference에 저장
+
+
+
+                        val data = json.getJSONObject("data")
+                        val token = data.getString("token")
+                        ContextUtil.setUserToken(mContext, token)
 
 
 
