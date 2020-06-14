@@ -1,17 +1,11 @@
 package com.phis.apipractice_20200613
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 
 class SplashActivity : BaseActivity() {
-    override fun setupEvents() {
-
-
-    }
-
-    override fun setValues() {
-
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,4 +13,29 @@ class SplashActivity : BaseActivity() {
         setupEvents()
         setValues()
     }
+
+
+    override fun setupEvents() {
+
+
+    }
+
+    override fun setValues() {
+
+//        3초 뒤에 다음화면으로 이동.
+        val myHandler = Handler()       // 안드로이드가 주는 Handler로 선택.
+        myHandler.postDelayed({
+
+//            시간이 지난 뒤, 실행할 내용
+
+            val myIntent = Intent(mContext, LoginActivity::class.java)
+            startActivity(myIntent)
+            finish()
+
+
+        }, 3000)
+
+
+    }
+
 }
