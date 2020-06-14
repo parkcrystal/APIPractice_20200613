@@ -54,6 +54,7 @@
                     android:id="@+id/secondSideTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
                     android:text="두번째 선택지"
                     android:textColor="@color/colorWhite" />
 
