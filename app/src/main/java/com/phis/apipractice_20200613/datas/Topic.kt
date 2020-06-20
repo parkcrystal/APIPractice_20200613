@@ -46,9 +46,9 @@ class Topic {
             topic.mySideId = json.getInt("my_side_id")
 
 //            서버에서 my_side 항목을 제대로 내려줄때만 파싱
-            if (json.isNull("my_side")) {
+            if (!json.isNull("my_side")) {
 //            실제 진영 정보 저장
-//            my_side 로 되어있는 {} 잉ㅇ => TopicSide로 변환해서 대입
+//            my_side 로 되어있는 {} 이용 => TopicSide로 변환해서 대입
                 topic.mySelectedSide = TopicSide.getTopicSideFromJson(json.getJSONObject("my_side"))
             }
 
