@@ -1,36 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-
     <item android:state_pressed="false">
 
         <layer-list>
 
-
             <item>
-
-                <layer-list>
-                    <item>
-                        <shape android:shape="rectangle">
-                            <solid android:color="@color/colorDarkGray">
-
-                            </solid>
-                        </shape>
-                    </item>
-                </layer-list>
-
+                <shape android:shape="rectangle">
+                    <solid android:color="@color/colorBlue"></solid>
+                </shape>
             </item>
 
             <item android:bottom="1dp" android:left="1dp" android:right="1dp" android:top="1dp">
-
                 <shape android:shape="rectangle">
                     <solid android:color="@color/colorWhite">
 
                     </solid>
-
                 </shape>
-
             </item>
+
         </layer-list>
+
     </item>
 
     <item android:state_pressed="true">
@@ -38,7 +27,7 @@
         <layer-list>
             <item>
                 <shape android:shape="rectangle">
-                    <solid android:color="@color/colorDarkGray" />
+                    <solid android:color="@color/colorBlue" />
                 </shape>
             </item>
 
@@ -50,6 +39,4 @@
         </layer-list>
 
     </item>
-
-
 </selector>

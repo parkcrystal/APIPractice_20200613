@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -56,6 +57,38 @@ class ReplyAdapter(val mContext: Context, val resId: Int, val mList: List<TopicR
         likeBtn.text = "좋아요 : ${data.likeCount}"
         dislikeBtn.text = "싫어요 : ${data.dislikeCount}"
 
+//        내 좋아요 / 싫어요 여부 표시
+        if (data.isMyLike) {
+//            내가 좋아요를 찍은 댓글일 경우
+//            좋아요 빨간색 / 싫어요 회색
+            likeBtn.setBackgroundResource(R.drawable.red_border_box)
+            dislikeBtn.setBackgroundResource(R.drawable.gray_border_box)
+
+//            좋아요 글씨 색 : 빨간색 => res => colors => red를 사용
+            likeBtn.setTextColor(mContext.resources.getColor(R.color.colorRed))
+            dislikeBtn.setTextColor(mContext.resources.getColor(R.color.colorDarkGray))
+        }
+        else if (data.isMyDislike) {
+//            내가 싫어요를 찍은 댓글일 경우
+//            좋아요 회색 / 싫어요 파란색
+            likeBtn.setBackgroundResource(R.drawable.gray_border_box)
+            dislikeBtn.setBackgroundResource(R.drawable.blue_border_box)
+//            버튼 글씨색 설정
+            likeBtn.setTextColor(mContext.resources.getColor(R.color.colorDarkGray))
+            dislikeBtn.setTextColor(mContext.resources.getColor(R.color.colorBlue))
+
+        }
+        else {
+//            아무것도 찍지 않은 경우
+//            둘다 회색
+            likeBtn.setBackgroundResource(R.drawable.gray_border_box)
+            dislikeBtn.setBackgroundResource(R.drawable.gray_border_box)
+
+//            버튼 글씨색 설정
+            likeBtn.setTextColor(mContext.resources.getColor(R.color.colorDarkGray))
+            dislikeBtn.setTextColor(mContext.resources.getColor(R.color.colorDarkGray))
+        }
+
 /*        좋아요 / 싫어요 이벤트 처리     */
 
 //            좋아요 API 호출 => 좋아요 누르기 / 취소 처리
@@ -79,6 +112,9 @@ class ReplyAdapter(val mContext: Context, val resId: Int, val mList: List<TopicR
 
                     data.likeCount = likeCount
                     data.dislikeCount = dislikeCount
+
+                    data.isMyLike = reply.getBoolean("my_like")
+                    data.isMyDislike = reply.getBoolean("my_dislike")
 
 //                    목록의 내용을 일부 변경
 //                    어댑터.notifyDataSetChanged() 실행 필요함
@@ -114,6 +150,9 @@ class ReplyAdapter(val mContext: Context, val resId: Int, val mList: List<TopicR
 
                     data.likeCount = likeCount
                     data.dislikeCount = dislikeCount
+
+                    data.isMyLike = reply.getBoolean("my_like")
+                    data.isMyDislike = reply.getBoolean("my_dislike")
 
 //                    목록의 내용을 일부 변경
 //                    어댑터.notifyDataSetChanged() 실행 필요함

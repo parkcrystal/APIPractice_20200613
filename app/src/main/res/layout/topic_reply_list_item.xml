@@ -47,6 +47,7 @@
                 android:layout_weight="1" />
 
             <Button
+                android:background="@drawable/gray_border_box"
                 android:id="@+id/likeBtn"
                 android:focusable="false"
                 android:layout_width="wrap_content"
@@ -54,6 +55,7 @@
                 android:text="좋아요 : 3" />
 
             <Button
+                android:background="@drawable/gray_border_box"
                 android:id="@+id/dislikeBtn"
                 android:focusable="false"
                 android:layout_width="wrap_content"
