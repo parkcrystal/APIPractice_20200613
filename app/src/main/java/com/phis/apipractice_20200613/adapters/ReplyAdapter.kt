@@ -98,12 +98,15 @@ class ReplyAdapter(val mContext: Context, val resId: Int, val mList: List<TopicR
 //            좋아요 API 호출 => 좋아요 누르기 / 취소 처리
         likeBtn.setOnClickListener {
 
-            ServerUtil.postRequestLikeOrDislike(mContext, data.id, true, object : JsonResponseHandler{
+            ServerUtil.postRequestReplyLikeOrDislike(mContext, data.id, true, object : JsonResponseHandler{
                 override fun onResponse(json: JSONObject) {
+
+                    Log.d("로그 확인", json.toString())
 
 //                    화면에 변경된 좋아요/싫어요 갯수 반영(응용)
                     val dataObj = json.getJSONObject("data")
                     val reply = dataObj.getJSONObject("reply")
+
 
 //                    목록에서 꺼낸 data 변수의 객체를 통째로 바꾸는건 불가능.
 //                    var로 바꿔서 통째로 바꿔도 => 목록에는 반영되지 않음.
@@ -137,7 +140,7 @@ class ReplyAdapter(val mContext: Context, val resId: Int, val mList: List<TopicR
 //            싫어요 API 호출 => 좋아요 누르기 / 취소 처리
         dislikeBtn.setOnClickListener {
 
-            ServerUtil.postRequestLikeOrDislike(mContext, data.id, false, object : JsonResponseHandler {
+            ServerUtil.postRequestReplyLikeOrDislike(mContext, data.id, false, object : JsonResponseHandler {
                 override fun onResponse(json: JSONObject) {
 
 //                    화면에 변경된 좋아요/싫어요 갯수 반영(응용)
