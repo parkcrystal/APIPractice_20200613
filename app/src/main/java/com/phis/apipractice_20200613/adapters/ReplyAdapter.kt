@@ -66,7 +66,7 @@ class ReplyAdapter(val mContext: Context, val resId: Int, val mList: List<TopicR
 
 //                    화면에 변경된 좋아요/싫어요 갯수 반영(응용)
                     val dataObj = json.getJSONObject("data")
-                    val reply = json.getJSONObject("reply")
+                    val reply = dataObj.getJSONObject("reply")
 
 //                    목록에서 꺼낸 data 변수의 객체를 통째로 바꾸는건 불가능.
 //                    var로 바꿔서 통째로 바꿔도 => 목록에는 반영되지 않음.
@@ -93,8 +93,30 @@ class ReplyAdapter(val mContext: Context, val resId: Int, val mList: List<TopicR
 //            싫어요 API 호출 => 좋아요 누르기 / 취소 처리
         dislikeBtn.setOnClickListener {
 
-            ServerUtil.postRequestLikeOrDislike(mContext, data.id, true, object : JsonResponseHandler {
+            ServerUtil.postRequestLikeOrDislike(mContext, data.id, false, object : JsonResponseHandler {
                 override fun onResponse(json: JSONObject) {
+
+//                    화면에 변경된 좋아요/싫어요 갯수 반영(응용)
+                    val dataObj = json.getJSONObject("data")
+                    val reply = dataObj.getJSONObject("reply")
+
+//                    목록에서 꺼낸 data 변수의 객체를 통째로 바꾸는건 불가능.
+//                    var로 바꿔서 통째로 바꿔도 => 목록에는 반영되지 않음.
+//                    data = TopicReply.getTopicReplyFromJson(reply)
+
+//                    목록에서 꺼낸 data 변수의 좋아요 갯수 / 싫어요 갯수를 직접 변경
+                    data.likeCount = reply.getInt("like_count")
+                    data.dislikeCount = reply.getInt("dislike_count")
+
+//                    목록의 내용을 일부 변경
+//                    어댑터.notifyDataSetChanged() 실행 필요함
+//                    이미 어댑터 내부에 있는 상황 => 곧바로 notifyDataSetChanged() 실행 가능
+
+//                    runOnUiThread로 처리 필요 => 어댑터 내부에선 사용 불가.
+//                    대체제: Handler(Looper.getMainLooper()).post (UIThread 접근하는 방법)
+                    Handler(Looper.getMainLooper()).post {
+                        notifyDataSetChanged()
+                    }
 
                 }
             })
