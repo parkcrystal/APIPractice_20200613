@@ -101,8 +101,6 @@ class ReplyAdapter(val mContext: Context, val resId: Int, val mList: List<TopicR
             ServerUtil.postRequestReplyLikeOrDislike(mContext, data.id, true, object : JsonResponseHandler{
                 override fun onResponse(json: JSONObject) {
 
-                    Log.d("로그 확인", json.toString())
-
 //                    화면에 변경된 좋아요/싫어요 갯수 반영(응용)
                     val dataObj = json.getJSONObject("data")
                     val reply = dataObj.getJSONObject("reply")
