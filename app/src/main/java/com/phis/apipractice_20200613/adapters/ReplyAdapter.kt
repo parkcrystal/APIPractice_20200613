@@ -61,7 +61,7 @@ class ReplyAdapter(val mContext: Context, val resId: Int, val mList: List<TopicR
 //            좋아요 API 호출 => 좋아요 누르기 / 취소 처리
         likeBtn.setOnClickListener {
 
-            ServerUtil.postRequestLikeOrDislike(mContext, data.id, true, object : JsonResponseHandler {
+            ServerUtil.postRequestLikeOrDislike(mContext, data.id, true, object : JsonResponseHandler{
                 override fun onResponse(json: JSONObject) {
 
 //                    화면에 변경된 좋아요/싫어요 갯수 반영(응용)
@@ -73,8 +73,12 @@ class ReplyAdapter(val mContext: Context, val resId: Int, val mList: List<TopicR
 //                    data = TopicReply.getTopicReplyFromJson(reply)
                     
 //                    목록에서 꺼낸 data 변수의 좋아요 갯수 / 싫어요 갯수를 직접 변경
-                    data.likeCount = reply.getInt("like_count")
-                    data.dislikeCount = reply.getInt("dislike_count")
+
+                    val likeCount = reply.getInt("like_count")
+                    val dislikeCount = reply.getInt("dislike_count")
+
+                    data.likeCount = likeCount
+                    data.dislikeCount = dislikeCount
 
 //                    목록의 내용을 일부 변경
 //                    어댑터.notifyDataSetChanged() 실행 필요함
@@ -105,8 +109,11 @@ class ReplyAdapter(val mContext: Context, val resId: Int, val mList: List<TopicR
 //                    data = TopicReply.getTopicReplyFromJson(reply)
 
 //                    목록에서 꺼낸 data 변수의 좋아요 갯수 / 싫어요 갯수를 직접 변경
-                    data.likeCount = reply.getInt("like_count")
-                    data.dislikeCount = reply.getInt("dislike_count")
+                    val likeCount = reply.getInt("like_count")
+                    val dislikeCount = reply.getInt("dislike_count")
+
+                    data.likeCount = likeCount
+                    data.dislikeCount = dislikeCount
 
 //                    목록의 내용을 일부 변경
 //                    어댑터.notifyDataSetChanged() 실행 필요함
