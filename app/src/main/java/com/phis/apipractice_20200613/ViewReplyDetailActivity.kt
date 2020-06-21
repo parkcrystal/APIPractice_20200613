@@ -11,7 +11,7 @@ import org.json.JSONObject
 class ViewReplyDetailActivity : BaseActivity() {
 
     var myReplyId = -1
-    lateinit var mReply = TopicReply()
+    lateinit var mReply : TopicReply
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
