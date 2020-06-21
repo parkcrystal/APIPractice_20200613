@@ -2,6 +2,7 @@ package com.phis.apipractice_20200613
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import com.phis.apipractice_20200613.adapters.ReReplyAdapter
 import com.phis.apipractice_20200613.datas.TopicReply
 import com.phis.apipractice_20200613.datas.TopicReply.Companion.getTopicReplyFromJson
@@ -41,10 +42,25 @@ class ViewReplyDetailActivity : BaseActivity() {
 
             ServerUtil.postRequestReReply(mContext, mReplyId, content, object : ServerUtil.JsonResponseHandler {
 
-
                 override fun onResponse(json: JSONObject) {
 
+//                    서버에서 다시 의견에 대한 상세 현황 가져오기
+                    getReplyDetailFromServer()
 
+                    val code = json.getInt("code")
+
+                    if (code == 200) {
+                        runOnUiThread {
+                            Toast.makeText(mContext, "의견 등록에 성공했습니다.", Toast.LENGTH_SHORT)
+                                .show()
+                            finish()
+                        }
+                    } else {
+                        runOnUiThread {
+                            Toast.makeText(mContext, "의견 등록에 실패했습니다.", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                    }
 
 
                 }
@@ -81,6 +97,10 @@ class ViewReplyDetailActivity : BaseActivity() {
 
 //               화면에 뿌려질 답글 목록 (JSONArray) 도 담아주자.
                 val reReplies = reply.getJSONArray("replies")
+
+//                기존에 담겨있던 답글 목록을 날리고
+//                다시 답글들을 추가해주자.
+                reReplyList.clear()
 
                 for (i in 0..reReplies.length() -1) {
 //                    JSONArray 내부의 객체를 => TopicReply로 변환 => reReplyList에 추가
