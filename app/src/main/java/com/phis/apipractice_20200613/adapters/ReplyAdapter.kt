@@ -14,6 +14,8 @@ import android.widget.TextView
 import android.widget.Toast
 import com.phis.apipractice_20200613.EditReplyActivity
 import com.phis.apipractice_20200613.R
+import com.phis.apipractice_20200613.ViewReplyDetailActivity
+import com.phis.apipractice_20200613.ViewTopicDetailActivity
 import com.phis.apipractice_20200613.datas.Topic
 import com.phis.apipractice_20200613.datas.TopicReply
 import com.phis.apipractice_20200613.utils.ServerUtil
@@ -91,6 +93,15 @@ class ReplyAdapter(val mContext: Context, val resId: Int, val mList: List<TopicR
 //            버튼 글씨색 설정
             likeBtn.setTextColor(mContext.resources.getColor(R.color.colorDarkGray))
             dislikeBtn.setTextColor(mContext.resources.getColor(R.color.colorDarkGray))
+        }
+
+
+/*      답글 버튼 이벤트 구현   */
+        replyBtn.setOnClickListener {
+
+            val myIntent = Intent(mContext, ViewReplyDetailActivity::class.java)
+//          adapter에서는 startActivity 호출 불가. 따라서, mContext의 도움을 받아서 실행.
+            mContext.startActivity(myIntent)
         }
 
 /*        좋아요 / 싫어요 이벤트 처리     */
