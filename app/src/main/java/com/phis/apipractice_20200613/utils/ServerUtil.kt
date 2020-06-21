@@ -134,6 +134,61 @@ class ServerUtil {
         }
 
 
+        /*   의견 상세 정보 확인   */
+        fun getRequestReplyDetail(context: Context, replyId: Int, handler: JsonResponseHandler?) {
+
+//            또 필요함.
+            val client = OkHttpClient()
+
+
+//          4번의견? /topic_reply/4  , 2번? /topic_reply/2
+            val urlBuilder = "${BASE_URL}/topic_reply/${replyId}".toHttpUrlOrNull()!!.newBuilder()
+
+
+//         첨부 데이터가 포함된 주소 확인
+            val urlString = urlBuilder.build().toString()
+            Log.d("완성된 주소", urlString)
+
+//          Request를 만들어서 최종 전송 정보 마무리.
+            val request = Request.Builder()
+                .url(urlString)
+                .get()
+                .header("X-Http-Token", ContextUtil.getUserToken(context))   //헤더를 요구하면 추가해야 함.
+                .build()
+
+
+
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+//                    <실패>: 서버에 연결 자체를 실패했을 경우
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+//                    <성공>: 서버에 응답을 잘 받아왔을경우
+//                    응답 중에서 body(내용물)을 string으로 저장
+
+                    val bodyString = response.body!!.string()
+
+
+//                    저장한 String을 JSONObject 양식으로 가공
+//                   서버의 응답이 JSON 형태이기 때문.
+                    val json = JSONObject(bodyString)
+
+
+//                    화면 (액티비티)에 만들어낸 json변수를 전달
+                    Log.d("JSON응답", json.toString())
+                    handler?.onResponse(json)
+
+
+                }
+
+
+            })
+
+
+        }
+
+
         /*   주제 상세 정보 확인:  원하는 주제의 상세정보 보기 => 몇번 주제인지 화면에서 받아와야 함.   */
         fun getRequestTopicDetail(context: Context, topicId: Int, handler: JsonResponseHandler?) {
 

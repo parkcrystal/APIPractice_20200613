@@ -101,6 +101,7 @@ class ReplyAdapter(val mContext: Context, val resId: Int, val mList: List<TopicR
 
             val myIntent = Intent(mContext, ViewReplyDetailActivity::class.java)
 //          adapter에서는 startActivity 호출 불가. 따라서, mContext의 도움을 받아서 실행.
+            myIntent.putExtra("reply_id", data.id)
             mContext.startActivity(myIntent)
         }
 
