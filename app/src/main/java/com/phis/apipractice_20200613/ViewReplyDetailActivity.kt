@@ -7,7 +7,6 @@ import com.phis.apipractice_20200613.datas.TopicReply
 import com.phis.apipractice_20200613.datas.TopicReply.Companion.getTopicReplyFromJson
 import com.phis.apipractice_20200613.utils.ServerUtil
 import kotlinx.android.synthetic.main.activity_view_reply_detail.*
-import kotlinx.android.synthetic.main.activity_view_topic_detail.*
 import org.json.JSONObject
 
 class ViewReplyDetailActivity : BaseActivity() {
@@ -41,6 +40,7 @@ class ViewReplyDetailActivity : BaseActivity() {
         reReplyListView.adapter = mReReplyAdapter
         
 //        서버에서 의견 상세 현황 가져오기
+        getReplyDetailFromServer()
 
     }
 
