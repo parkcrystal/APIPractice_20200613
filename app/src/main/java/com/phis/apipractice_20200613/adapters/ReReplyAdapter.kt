@@ -55,8 +55,6 @@ class ReReplyAdapter(val mContext: Context, val resId: Int, val mList: List<Topi
 //        데이터 / 뷰 연결 => 알고리즘
         writerNickNameTxt.text = data.user.nickName
         contentTxt.text = data.content
-
-//        어떤 댓글을 옹호하는지? (진영이름) 양식으로 표현
         selectedSideTitleTxt.text = "(${data.selectedSide.title})"
 
         likeBtn.text = "좋아요 : ${data.likeCount}"
