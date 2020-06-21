@@ -6,12 +6,13 @@ import com.phis.apipractice_20200613.adapters.ReReplyAdapter
 import com.phis.apipractice_20200613.datas.TopicReply
 import com.phis.apipractice_20200613.datas.TopicReply.Companion.getTopicReplyFromJson
 import com.phis.apipractice_20200613.utils.ServerUtil
+import kotlinx.android.synthetic.main.activity_edit_reply.*
 import kotlinx.android.synthetic.main.activity_view_reply_detail.*
 import org.json.JSONObject
 
 class ViewReplyDetailActivity : BaseActivity() {
 
-    var myReplyId = -1
+    var mReplyId = -1
     lateinit var mReply : TopicReply
 
 //    답글 목록을 담고있게 될 배열
@@ -28,11 +29,35 @@ class ViewReplyDetailActivity : BaseActivity() {
 
     override fun setupEvents() {
 
+        val content = reReplyContentEdt.text.toString()
+
+//        답글 등록 API 찾아보기 활용법 숙지
+//        답글 등록 성공시 => 리스트뷰의 내용 새로고침
+//        서버에서 다시 답글 목록을 받아와서 추가
+
+        postReReplyBtn.setOnClickListener {
+
+            val inputContent = reReplyContentEdt.text
+
+            ServerUtil.postRequestReReply(mContext, mReplyId, content, object : ServerUtil.JsonResponseHandler {
+
+
+                override fun onResponse(json: JSONObject) {
+
+
+
+
+                }
+
+            })
+
+        }
+
     }
 
     override fun setValues() {
 
-        myReplyId = intent.getIntExtra("reply_id", -1)
+        mReplyId = intent.getIntExtra("reply_id", -1)
         
 //        어댑터를 먼저 생성 => 답글 목록을 뿌려준다고 명시
         mReReplyAdapter = ReReplyAdapter(mContext, R.layout.topic_re_reply_list_item, reReplyList)
@@ -46,7 +71,7 @@ class ViewReplyDetailActivity : BaseActivity() {
 
     fun getReplyDetailFromServer() {
 
-        ServerUtil.getRequestReplyDetail(mContext, myReplyId, object: ServerUtil.JsonResponseHandler{
+        ServerUtil.getRequestReplyDetail(mContext, mReplyId, object: ServerUtil.JsonResponseHandler{
 
             override fun onResponse(json: JSONObject) {
 
