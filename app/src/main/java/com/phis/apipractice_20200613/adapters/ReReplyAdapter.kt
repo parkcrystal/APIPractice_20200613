@@ -44,7 +44,6 @@ class ReReplyAdapter(val mContext: Context, val resId: Int, val mList: List<Topi
 //        XML 에서 사용할 뷰 가져오기
         val writerNickNameTxt = row.findViewById<TextView>(R.id.writerNickNameTxt)
         val contentTxt = row.findViewById<TextView>(R.id.contentTxt)
-        val replyBtn = row.findViewById<Button>(R.id.replyBtn)
         val likeBtn = row.findViewById<Button>(R.id.likeBtn)
         val dislikeBtn = row.findViewById<Button>(R.id.dislikeBtn)
         val selectedSideTitleTxt = row.findViewById<TextView>(R.id.selectedSideTitleTxt)
@@ -57,6 +56,7 @@ class ReReplyAdapter(val mContext: Context, val resId: Int, val mList: List<Topi
         contentTxt.text = data.content
         selectedSideTitleTxt.text = "(${data.selectedSide.title})"
 
+//        좋아요 / 싫어요 버튼 관련 표시
         likeBtn.text = "좋아요 : ${data.likeCount}"
         dislikeBtn.text = "싫어요 : ${data.dislikeCount}"
 
